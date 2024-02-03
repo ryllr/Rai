@@ -1,0 +1,89 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: #F69DDE; /* Light gray background color */
+        }
+
+        .rounded-container {
+            border-radius: 15px;
+            background-color: #fff; /* White background color for the container */
+            padding: 13px; /* Adjust the padding as needed */
+            margin: 30px auto; /* Center the container */
+            width: 120%;
+            margin: 5rem 0;
+            margin-left: 50%;
+        }
+
+        h1,
+        p {
+            color: #343a40; /* Dark gray text color */
+        }
+
+        /* Adjust form layout within the container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Adjust form elements within the container */
+        .form-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        /* Adjust label alignment */
+        label {
+            margin-bottom: 5px;
+        }
+
+        /* Adjust text box styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Adjust button alignment */
+        .btn {
+            margin-top: 10px;
+        }
+    </style>
+
+    <div class="container mx-auto" style="width: 50%;">
+        <div class="rounded-container">
+            <form action="" method="post" class="form-container">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Register</legend>
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger">{{ field.errors.as_text }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">Already have an account? <a href="{% url 'login' %}">Login</a></small>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

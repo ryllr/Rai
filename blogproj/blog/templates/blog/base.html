@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+    <style>
+       body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .site-header {
+            text-align: center;
+
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar-brand img {
+            margin-top: 10px;
+        }
+
+        .auth-links {
+            text-decoration: none;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            display: inline-block;
+            padding: 12px 3px;
+            margin: 10px 0;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            overflow: hidden;
+            margin-right: 5px;
+        }
+
+        .auth-links span {
+            position: absolute;
+            display: block;
+        }
+
+        .auth-links span:nth-child(1),
+        .auth-links span:nth-child(2),
+        .auth-links span:nth-child(3),
+        .auth-links span:nth-child(4) {
+            width: 0;
+            height: 2px;
+            background: #ccc;
+            animation: none;
+        }
+
+        .auth-links:hover {
+            background-color: transparent !important;
+            color: white !important;
+        }
+
+        .auth-links:focus {
+            outline: none;
+        }
+
+        .container {
+            text-align: center;
+        }
+</style>
+</head>
+<body>
+        <nav class="navbar-dark fixed-top" style="background-color: #FF61D3;">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="#">
+                    <img src="{% static 'logoo.png' %}" alt="Logo" height="80">
+                </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+              <a class="nav-item nav-link" href="{% url 'blog-home' %}">HOME</a>
+            </div>
+            <div class="navbar-nav">
+                <a href="{% url 'blog-new' %}" class="auth-links">Create Post</a>
+                <a href="{% url 'logout' %}" class="auth-links">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="auth-links">Login</a>
+                <a href="{% url 'register' %}" class="auth-links">Register</a>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+          <div class="col-md-8">
+              {%  if messages%}
+                {% for message in messages %}
+                    <div class="alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+              {% endif %}
+          </div>
+        <div class="col-md-8">
+           {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-sectionw">
+          </div>
+        </div>
+      </div>
+  <footer class="" >
+          <ul class="nav justify-content-center border-bottom"  style="margin-top: 60px;">
+            <li class="nav-item"><a href="admin/" class="nav-link px-2 text-muted">Admin</a></li>
+          </ul>
+          <p class="text-center text-muted">&copy; Donut Jr 2023</p>
+        </footer>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
